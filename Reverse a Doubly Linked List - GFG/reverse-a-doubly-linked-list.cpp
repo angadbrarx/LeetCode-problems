@@ -100,36 +100,23 @@ struct Node
 */
 Node* reverseDLL(Node * head)
 {
-/*
-    Node* prev = NULL;
-    Node* curr = head;
-    Node* forward = NULL;
-    
-    while(curr -> next != NULL){
-        curr = curr -> next;
-    }
-//curr is at last element
-    while(curr != NULL){
-        curr -> next = curr -> prev;
-        curr -> prev = NULL;
-        curr = curr -> next; 
-    }
-*/
-
-    Node* temp;
+    //Node* temp;
     Node* Prev = NULL;
-    Node* Next;
+    Node* forward = NULL;
     Node* Curr= head;
-    while(Curr->next!=NULL){
-        Next = Curr->next;
+    while(Curr != NULL){
+        forward = Curr->next;
         Curr->next = Curr->prev;
-        Curr->prev = Next;
-        Curr = Next;
+        Curr->prev = forward;
+        Prev = Curr;
+        Curr = forward;
     }
-    temp = Curr->prev;
-    Curr->prev = NULL;
-    Curr->next = temp;
-    return Curr;
+    return Prev;
+    
+    // temp = Curr->prev;
+    // Curr->prev = NULL;
+    // Curr->next = temp;
+    //return Curr;
 }
 
 
