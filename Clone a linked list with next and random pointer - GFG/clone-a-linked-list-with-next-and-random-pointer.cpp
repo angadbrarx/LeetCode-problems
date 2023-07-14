@@ -20,7 +20,8 @@ struct Node {
 // } Driver Code Ends
 
 class Solution
-{   public: 
+{   
+    public:
     void insertAtTail(Node* &head, Node* &tail, int d){
         Node* newNode = new Node(d);
         if(head == NULL){
@@ -34,9 +35,157 @@ class Solution
         }
     }
     
+// M -2 w/o using map by changing links
+    // TC = O(n)
+    // SC = O(1)
+    
+    // public:
+    // Node *copyList(Node *head)
+    // {
+    //     //Step 1 - create clone LL
+        
+    //     Node* cloneHead = NULL;
+    //     Node* cloneTail = NULL;
+        
+    //     Node* temp = head;
+    //     while(temp != NULL){
+    //         insertAtTail(cloneHead, cloneTail, temp -> data);
+    //         temp = temp -> next;
+    //     }
+        
+    //     //Step 2 - add cloneNodes in between original list
+        
+    //     Node* originalNode = head;
+    //     Node* cloneNode = cloneHead;
+        
+    //     while(originalNode != NULL && cloneNode != NULL){
+    //         Node* next = originalNode -> next;
+    //         originalNode -> next = cloneNode;
+    //         originalNode = next;
+            
+    //         next = cloneNode -> next;
+    //         cloneNode -> next = originalNode;
+    //         cloneNode = next;
+            
+    //     }
+        
+    //     //Step 3 - random pointers copy
+        
+    //         temp = head;
+    //         while(temp != NULL){
+    //             if(temp -> next != NULL){
+    //                 //tertiary operator to replace lines 80-85
+    //                 // temp -> next -> random = temp -> random ? temp -> random -> next : NULL
+                    
+    //                 if(temp -> arb != NULL){
+    //                     temp -> next -> arb = temp -> arb -> next;  
+    //                 }
+    //                 else{
+    //                     temp -> next = NULL;
+    //                 }
+    //                 //moving temp forward by 2 as temp -> next = cloneNode
+    //                 temp = temp -> next -> next;
+    //             }
+               
+    //         }
+            
+        
+    //     //Step 4 - Revert changes made in step 2
+        
+    //         originalNode = head;
+    //         cloneNode = cloneHead;
+            
+    //         while(originalNode != NULL && cloneNode != NULL){
+            
+    //         originalNode -> next = cloneNode -> next;
+    //         originalNode = originalNode -> next;
+            
+    //         if(originalNode != NULL)
+    //             cloneNode -> next = originalNode -> next;
+    //         cloneNode = cloneNode -> next;
+            
+    //     }
+    //     //Step 5 - return ans
+    //         return cloneHead;
+    // }
+        
+    
+    
     public:
     Node *copyList(Node *head)
     {
+        //Step 1 - create clone LL
+        
+        Node* cloneHead = NULL;
+        Node* cloneTail = NULL;
+        
+        Node* temp = head;
+        while(temp != NULL){
+            insertAtTail(cloneHead, cloneTail, temp -> data);
+            temp = temp -> next;
+        }
+        
+        //Step 2 - add cloneNodes in between original list
+        
+        Node* originalNode = head;
+        Node* cloneNode = cloneHead;
+        
+        while(originalNode != NULL && cloneNode != NULL){
+            Node* next = originalNode -> next;
+            originalNode -> next = cloneNode;
+            originalNode = next;
+            
+            next = cloneNode -> next;
+            cloneNode -> next = originalNode;
+            cloneNode = next;
+            
+        }
+        
+        //Step 3 - random pointers copy
+        
+            temp = head;
+            while(temp != NULL){
+                if(temp -> next != NULL){
+                    //tertiary operator to replace lines 80-85
+                    temp -> next -> arb = temp -> arb ? 
+                    temp -> arb -> next : temp -> arb;
+                    
+                    // if(temp -> arb != NULL){
+                    //     temp -> next -> arb = temp -> arb -> next;  
+                    // }
+                    // else{
+                    //     temp -> next = NULL;
+                    // }
+                    //moving temp forward by 2 as temp -> next = cloneNode
+                    temp = temp -> next -> next;
+                }
+               
+            }
+            
+        
+        //Step 4 - Revert changes made in step 2
+        
+            originalNode = head;
+            cloneNode = cloneHead;
+            
+            while(originalNode != NULL && cloneNode != NULL){
+            
+            originalNode -> next = cloneNode -> next;
+            originalNode = originalNode -> next;
+            
+            if(originalNode != NULL)
+                cloneNode -> next = originalNode -> next;
+            
+            cloneNode = cloneNode -> next;
+            
+        }
+        //Step 5 - return ans
+            return cloneHead;
+    }
+// M-1 Using map
+        // TC = O(n)
+        // SC = O(n)
+/*
         //Step 1 - Create clone list using next
         Node* cloneHead = NULL;
         Node* cloneTail = NULL;
@@ -69,8 +218,10 @@ class Solution
             
         }
         return cloneHead;
-        
     }
+    */   
+    
+
 
 };
 
