@@ -92,50 +92,33 @@ struct Node
 }; */
 
 class Solution {
-  private:
-  
-    //function to return height
-    int height(struct Node* node){
-        //base case
-        if(node == NULL)
-            return 0;
-        
-        int left = height(node -> left);
-        int right = height(node -> right);
-        
-        int ans = max(left, right) + 1;
-        return ans;
-    }
-    
-    public:
-    //in pair, first int is diameter and second is height
-    
+  public:
     pair<int, int> diameterFast(Node* root){
-        //base case
-        if(root == NULL){
-            pair<int, int> p = make_pair(0, 0);
-            return p;
-        }
-        
-        pair<int, int> left = diameterFast(root -> left);
-        pair<int, int> right = diameterFast(root -> right);
-        
-        int p1 = left.first;
-        int p2 = right.first;
-        int p3 = left.second + 1 + right.second;
-        
-        pair<int, int> ans;
-        //diameter
-        ans.first = max(p1, max(p2, p3));
-        //height
-        ans.second = max(left.second, right.second) + 1;
-        
-        return ans;
-        
+    //base case
+    if(root == NULL){
+        pair<int, int> p = make_pair(0,0);
+        return p;
     }
+    pair<int, int> left = diameterFast(root -> left);
+    pair<int, int> right = diameterFast(root -> right);
+
+    int p1 = left.first;
+    int p2 = right.first;
+    int p3 = left.second + 1 + right.second;
+
+    pair<int, int> ans;
+    //diameter
+    ans.first = max(p1, max(p2, p3));
+    //height
+    ans.second = max(left.second, right.second)+1 ;
+
+    return ans;
+    
+}
+
     // Function to return the diameter of a Binary Tree.
     int diameter(Node* root) {
-        return diameterFast(root).first;
+        return diameterFast(root).first ;
     }
 };
 
