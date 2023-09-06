@@ -108,6 +108,41 @@ public:
         return next[0];
     }
     
+    int solveSpace2(vector<vector<int>> &mat, int n, int m){
+        int maxi = 0;
+        for(int i = n-1; i>=0; i--){
+            for(int j = m-1; j>=0; j--){
+                int down = 0;
+                int diag = 0;
+                int right = 0;
+                
+                if(i < n-1)
+                    down = mat[i+1][j];
+                else
+                    down = 0;
+                
+                if(j < m-1)
+                    right = mat[i][j+1];
+                else
+                    right = 0;
+                
+                if(i < n-1 && j < m-1)
+                    diag = mat[i+1][j+1];
+                else
+                    diag = 0;
+                
+                if(mat[i][j] == 1){
+                    mat[i][j] = 1 + min(down, min(right, diag));
+                    maxi = max(maxi, mat[i][j]);
+                }
+                
+            }
+        }
+        
+        return maxi;
+        
+    }
+    
     int maxSquare(int n, int m, vector<vector<int>> mat){
         // int maxi = 0;
         // solveRec(mat, 0, 0, maxi);
@@ -122,9 +157,11 @@ public:
     //     solveTab(mat, maximum);
     //     return maximum;
     
-            int maximum = 0;
-            solveSpace(mat, maximum);
-            return maximum;
+            // int maximum = 0;
+            // solveSpace(mat, maximum);
+            // return maximum;
+            
+            return solveSpace2(mat, n, m);
     
     }
 };
