@@ -59,13 +59,16 @@ struct Node {
 
 class Solution
 {
+    /*  1 - reverse LL
+        2 - add
+        3 - reverse
+    */
     public:
-    Node* reverse(Node* head){
+    Node* reverse(Node* &head){
         Node* curr = head;
         Node* prev = NULL;
         Node* next = NULL;
-        
-        while(curr != NULL){
+        while(curr!=NULL){
             next = curr -> next;
             curr -> next = prev;
             prev = curr;
@@ -74,12 +77,11 @@ class Solution
         return prev;
     }
     
-    void insertAtTail(struct Node* &head, struct Node* &tail, int val){
-        Node* temp = new Node(val); 
+    Node* insertAtTail(Node* &head, Node* &tail, int val){
+        Node* temp = new Node(val);
         if(head == NULL){
             head = temp;
             tail = temp;
-            return;
         }
         else{
             tail -> next = temp;
@@ -87,30 +89,23 @@ class Solution
         }
     }
     
-    public:
-    struct Node* add(struct Node* first, struct Node* second){
+    Node* add(Node* first, Node* second){
         int carry = 0;
-        
         Node* ansHead = NULL;
         Node* ansTail = NULL;
-        
         while(first != NULL || second != NULL || carry != 0){
-            
             int val1 = 0;
             if(first != NULL)
                 val1 = first -> data;
-            
             int val2 = 0;
             if(second != NULL)
                 val2 = second -> data;
-                
             
             int sum = carry + val1 + val2;
-            int digit = sum%10;
+            int digit = sum % 10;
             
-           //create node and add in answer LL
-            insertAtTail(ansHead, ansTail, digit);;
-        
+            insertAtTail(ansHead, ansTail, digit);
+            
             carry = sum/10;
             
             if(first != NULL)
@@ -118,12 +113,11 @@ class Solution
             if(second != NULL)
                 second = second -> next;
         }
-        
         return ansHead;
-        
     }
     
-    public:
+    
+    
     //Function to add two numbers represented by linked list.
     struct Node* addTwoLists(struct Node* first, struct Node* second)
     {
@@ -133,7 +127,6 @@ class Solution
         Node* ans = add(first, second);
         
         ans = reverse(ans);
-        
         return ans;
     }
 };
