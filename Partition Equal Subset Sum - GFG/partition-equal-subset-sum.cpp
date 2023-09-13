@@ -49,6 +49,28 @@ public:
         
     }
     
+    bool solveTab(int N, int arr[], int sum){
+        vector<vector<int>>dp(N+1, vector<int>(sum+1, 0));
+        
+        for(int i=0; i<=N; i++)
+            dp[i][0] = 1;
+        
+        //index = N-1 as we know that for index = N, return 0
+        for(int index = N-1; index >=0; index--){
+            for(int target = 0; target<=sum/2; target++){
+                
+                bool include = 0;
+                if(target - arr[index] >=0)
+                    include = dp[index+1][target - arr[index]];
+                
+                bool exclude = dp[index+1][target];
+                    
+                dp[index][target] = include or exclude;
+            }
+        }
+        return dp[0][sum/2];
+    }
+    
     int equalPartition(int N, int arr[])
     {
         int sum = sumofArray(N, arr);
@@ -59,8 +81,10 @@ public:
            
         //return solveRec(0, arr, N, target);
         
-        vector<vector<int>>dp(N+1, vector<int>(target+1, -1));
-        return solveMem(0, arr, N, target, dp);
+        // vector<vector<int>>dp(N+1, vector<int>(target+1, -1));
+        // return solveMem(0, arr, N, target, dp);
+        
+        return solveTab(N, arr, sum);
     }
 };
 
