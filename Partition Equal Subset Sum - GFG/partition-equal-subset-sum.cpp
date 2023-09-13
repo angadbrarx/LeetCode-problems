@@ -71,6 +71,31 @@ public:
         return dp[0][sum/2];
     }
     
+    bool solveSpace(int N, int arr[], int sum){
+        vector<int>curr(sum+1, 0);
+        vector<int>next(sum +1, 0);
+        
+        curr[0] = 1;
+        next[0] = 1;
+        
+        //index = N-1 as we know that for index = N, return 0
+        for(int index = N-1; index >=0; index--){
+            for(int target = 0; target<=sum/2; target++){
+                
+                bool include = 0;
+                if(target - arr[index] >=0)
+                    include = next[target - arr[index]];
+                
+                bool exclude = next[target];
+                    
+                curr[target] = include or exclude;
+            }
+            next = curr;
+        }
+        return curr[sum/2];
+        
+    }
+    
     int equalPartition(int N, int arr[])
     {
         int sum = sumofArray(N, arr);
@@ -84,7 +109,8 @@ public:
         // vector<vector<int>>dp(N+1, vector<int>(target+1, -1));
         // return solveMem(0, arr, N, target, dp);
         
-        return solveTab(N, arr, sum);
+        //return solveTab(N, arr, sum);
+        return solveSpace(N, arr, sum);
     }
 };
 
